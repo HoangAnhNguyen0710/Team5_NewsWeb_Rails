@@ -15,25 +15,13 @@
     <%= form.label :title, style: "display: block" %>
     <%= form.text_field :title %>
   </div>
-
-  <div>
     <%= form.label :category_id, style: "display: block" %>
-    <%= form.number_field :category_id %>
-  </div>
+    <%= form.select :category_id, @categories.collect { |category| [ category.category_name, category.id ] } %>
 
   <div>
     <%= form.label :content, style: "display: block" %>
     <%= form.text_field :content %>
   </div>
-
-  <%
-=begin%>
- <div>
-    <%= form.label :user_id, style: "display: block" %>
-    <%= form.number_field :user_id %>
-  </div> 
-<%
-=end%>
 
   <div>
     <%= form.label :display, style: "display: block" %>
