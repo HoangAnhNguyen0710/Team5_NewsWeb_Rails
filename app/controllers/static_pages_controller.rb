@@ -3,6 +3,6 @@ class StaticPagesController < ApplicationController
   end
 
   def category
-    @article = Article.where(category: params[:id].to_i)
+    @articles = Article.where(category: params[:id].to_i)
   end
 end
