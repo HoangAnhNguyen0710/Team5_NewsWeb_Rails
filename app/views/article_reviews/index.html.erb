@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Article reviews</h1>
+
+<div id="article_reviews">
+  <% @article_reviews.each do |article_review| %>
+    <%= render article_review %>
+    <p>
+      <%= link_to "Show this article review", article_review %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New article review", new_article_review_path %>

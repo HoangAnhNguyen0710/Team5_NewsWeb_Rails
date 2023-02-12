@@ -1,0 +1,32 @@
+<%= form_with(model: article_review) do |form| %>
+  <% if article_review.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(article_review.errors.count, "error") %> prohibited this article_review from being saved:</h2>
+
+      <ul>
+        <% article_review.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :user_id, style: "display: block" %>
+    <%= form.number_field :user_id %>
+  </div>
+
+  <div>
+    <%= form.label :article_id, style: "display: block" %>
+    <%= form.number_field :article_id %>
+  </div>
+
+  <div>
+    <%= form.label :review, style: "display: block" %>
+    <%= form.text_area :review %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
