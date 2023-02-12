@@ -1,4 +1,88 @@
-<h1>Trang Home</h1>
-<ul>
-  <li><a href="/articles">Articles</a></li>
-</ul>
+<div class="container">
+    <div class="row px-2">
+    <div id="carouselExampleCaptions" class="carousel slide h-50 my-4 col-12 col-lg-8" data-bs-ride="false">
+        <div class="carousel-inner" style="height: 480px">
+            <% @breakingNews.each do |article| %>
+            <% if article == @breakingNews.first%>
+            <div class="carousel-item active position-relative">
+                <% else %>
+                <div class="carousel-item position-relative">
+                    <% end %>
+                    <%# <div class="position-absolute w-100 bg-black" style="height: 360px"> %>
+                    <% if article.image.attached? %>
+                    <%= image_tag article.image, :class => "img-thumbnail w-100 opacity-50", :style => "height: 480px" %>
+                    <% else %>
+                    <img src="http://placehold.it/360x180" class="w-100 img-thumbnail opacity-50" alt="..."
+                        style="height: 480px">
+                    <% end %>
+                    <div class="carousel-caption d-md-block text-black fw-semibold">
+                        <%= link_to article.title, article, :class => "p-2 fs-5 fw-semibold text-decoration-none text-black" %>
+                        <span class="badge bg-success rounded-pill fs-6">
+                            <%= article.category.category_name%>
+                        </span>
+                    </div>
+                </div>
+                <% end %>
+            </div>
+            <button class="carousel-control-prev bg-black mr-2 " type="button"
+                data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next bg-black ml-2 " type="button"
+                data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+        <div class="col-12 col-md-4 d-flex flex-column my-4 align-content-between">
+           <% @breakingNews.each do |article| %>
+            <% if article != @breakingNews.first%>
+                <div class="d-flex p-2 row">
+                    <div class="col-6">
+                    <% if article.image.attached? %>
+                    <%= image_tag article.image, :class => "img-thumbnail", :style => "height: 120px" %>
+                    <% else %>
+                    <img src="http://placehold.it/90x90" class="img-thumbnail opacity-50" alt="..."
+                        style="height: 120px">
+                    <% end %>
+                    </div>
+                    <div class="d-md-block text-black fw-semibold px-2 col-6">
+                        <%= link_to article.title, article, :class => "py-2 fw-semibold text-decoration-none text-black" %>
+                        <span class="badge bg-success rounded-pill">
+                            <%= article.category.category_name%>
+                        </span>
+                    </div>
+                </div>
+              <% end %>
+            <% end %>
+        </div>
+      </div>
+        <div class="row" style="width:100%, margin: 0px">
+            <% @category.each do |category| %>
+            <h4><%= link_to category.category_name, category, :class=> "text-decoration-none text-black border-bottom border-success py-1"%></h4>
+            <div class="">
+            <div class="row">
+                <% @articlesByCategory[category.id].each do |article| %>
+                <div class="col-12 col-sm-6 col-md-4 col-xl-3 py-3">
+                    <div class="card mb-3" style="width: 100%; max-height: fit-content">
+                        <% if article.image.attached? %>
+                        <%= image_tag article.image, :class => "img-thumbnail w-100 card-img-top", :style => "max-height: 480px" %>
+                        <% else %>
+                        <img src="http://placehold.it/360x180" class="w-100 img-thumbnail opacity-50" alt="..."
+                            style="max-height: 480px">
+                        <% end %>
+                        <div class="card-body d-flex flex-column justify-content-end">
+                            <%= link_to article.title, article, :class => "card-title fw-semibold text-decoration-none" %>
+                            <p class="card-text"><%= article.created_at %></p>
+                            <%= link_to "Xem thêm", article, :class => "btn btn-outline-secondary" %>
+                        </div>
+                    </div>
+                </div>
+                <% end %>
+            </div>
+            </div>
+            <% end %>
+        </div>
+    </div>
+</div>
