@@ -6,6 +6,28 @@
      <%= image_tag @article.image %>
    <% end %>
  </p>
+
+<h2>Bình luận (<% @article.article_review.length%>)</h2>
+<ul>
+  <% @article.article_review.each do |article_review|%>
+    <li><%= article_review.review %>(<i><%= article_review.user_id %></i>)</li>
+  <% end %>
+</ul>
+<% if user_signed_in? %>
+ <h2>Review Form</h2>
+<%= form_with(model: @article_review, local: true) do |form| %>
+  <div class= "field">
+    <%= form.text_area :review %>
+    <%= form.hidden_field :article_id, :value => @article.id %>
+    <%= form.hidden_field :user_id, :value => current_user.id %>
+  </div>
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
+<% else %>
+  <div>If you wat to post a review, please  <%= link_to "Login", new_user_session_path, :class => "text-decoration-none" %></div>
+<% end %>
 <div>
   <%= link_to "Edit this article", edit_article_path(@article) %> |
   <%= link_to "Back to articles", articles_path %>

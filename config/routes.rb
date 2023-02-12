@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  # get 'static_pages/home'
+  resources :article_reviews
   root 'static_pages#home'
   get '/categories/:id', to: 'static_pages#category'
   devise_for :users

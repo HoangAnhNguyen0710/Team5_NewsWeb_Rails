@@ -8,6 +8,7 @@ class ArticlesController < ApplicationController
 
   # GET /articles/1 or /articles/1.json
   def show
+    @article_review = ArticleReview.new
   end
 
   # GET /articles/new
