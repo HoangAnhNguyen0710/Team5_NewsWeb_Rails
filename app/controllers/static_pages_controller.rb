@@ -1,6 +1,6 @@
 class StaticPagesController < ApplicationController
   def home
-    @breakingNews = Article.limit(4).order(created_at: :desc)
+    @lastest_news = Article.order("created_at DESC").limit(4)
     @category = Category.all
     @articlesByCategory = []
     @category.each do |category|

@@ -1,38 +1,60 @@
 <%= form_with(model: article) do |form| %>
   <% if article.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(article.errors.count, "error") %> prohibited this article from being saved:</h2>
-
-      <ul>
+    <div class="alert alert-danger" role="alert">
+      <ul class="list-group">
         <% article.errors.each do |error| %>
-          <li><%= error.full_message %></li>
+          <li class="list-group-item"><%= error.full_message %></li>
         <% end %>
       </ul>
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :title, style: "display: block" %>
-    <%= form.text_field :title %>
-  </div>
-    <%= form.label :category_id, style: "display: block" %>
-    <%= form.select :category_id, @categories.collect { |category| [ category.category_name, category.id ] } %>
+
 
   <div>
-    <%= form.label :content, style: "display: block" %>
-    <%= form.text_field :content %>
-  </div>
 
-  <div>
-    <%= form.file_field :image %>
-  </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="form-group">
+          <%= form.label :title, style: "display: block" %>
+          <%= form.text_field :title, style: "width: 100%; height: 48px; padding: 0 16px", placeholder: "Enter Title" %>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="form-group">
+          <%= form.label :category_id, style: "display: block" %>
+          <%= form.collection_select :category_id, Category.all, :id, :category_name, { prompt: "Select Category" }, class: "form-control text-capitalize", style: "padding-left: 12px; font-size: 16px; border: solid 0.5px" %>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="form-group">
+          <%= form.label :content, style: "display: block" %>
+          <%= form.text_field :content, style: "width: 100%; height: 48px; padding: 0 16px", placeholder: "Enter Content" %>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="field">
+          <%= form.label :thumbnail, style: "display: block" %>
+          <%= form.file_field :thumbnail %>
+        </div>
+      </div>
+    </div>
 
-  <div>
-    <%= form.label :display, style: "display: block" %>
-    <%= form.check_box :display %>
-  </div>
 
-  <div>
-    <%= form.submit %>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="form-group">
+          <%= link_to "Back to Home", root_path, class: "btn btn-lg font-weight-bold mt-3 float-left", style: "background-color: #032a63; color: #fff;font-size: 16px" %>
+          <%= form.submit article.new_record? ? "Create Article" : "Save Article", class: "btn btn-lg font-weight-bold mt-3 float-right", style: "background-color: #032a63; color: #fff;font-size: 16px" %>
+        </div>
+      </div>
+    </div>
   </div>
 <% end %>
+

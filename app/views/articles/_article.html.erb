@@ -20,8 +20,14 @@
   </p>
 
   <p>
+    <strong>Thumbnail:</strong>
+    <% if @article.thumbnail.attached? %>
+      <%= image_tag @article.thumbnail, style: "width: 100px; height: 100px" %>
+    <% end %>
+  </p>
+
+  <p>
     <strong>Display:</strong>
     <%= article.display %>
   </p>
-
 </div>

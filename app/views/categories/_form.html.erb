@@ -1,22 +1,36 @@
 <%= form_with(model: category) do |form| %>
   <% if category.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(category.errors.count, "error") %> prohibited this category from being saved:</h2>
-
-      <ul>
+    <div class="alert alert-danger" role="alert">
+      <ul class="list-group">
         <% category.errors.each do |error| %>
-          <li><%= error.full_message %></li>
+          <li class="list-group-item"><%= error.full_message %></li>
         <% end %>
       </ul>
     </div>
   <% end %>
 
   <div>
-    <%= form.label :category_name, style: "display: block" %>
-    <%= form.text_field :category_name %>
-  </div>
-
-  <div>
-    <%= form.submit %>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="form-group">
+          <h2><%= form.label "Category name:" %></h2>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="form-group">
+          <%= form.text_field :category_name, style: "width: 100%; height: 48px; padding: 0 16px", placeholder: "Enter Category Name" %>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="form-group">
+          <%= link_to "Back to Categories", categories_path, class: "btn btn-lg font-weight-bold mt-3 float-left", style: "background-color: #032a63; color: #fff;font-size: 16px" %>
+          <%= form.submit category.new_record? ? "Create Category" : "Save Category", class: "btn btn-lg font-weight-bold mt-3 float-right", style: "background-color: #032a63; color: #fff;font-size: 16px" %>
+        </div>
+      </div>
+    </div>
   </div>
 <% end %>

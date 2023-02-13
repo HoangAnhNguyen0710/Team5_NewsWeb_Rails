@@ -1,9 +1,22 @@
-<h1>New article</h1>
-
-<%= render "form", article: @article %>
-
-<br>
-
-<div>
-  <%= link_to "Back to articles", articles_path %>
+<div class="content-wrapper">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="card" data-aos="fade-up">
+          <div class="card-body">
+            <div class="aboutus-wrapper">
+              <h1 class="text-center mb-5 text-uppercase">
+                New Article
+              </h1>
+              <div class="row">
+                <div class="col-lg-12 mb-5 mb-sm-2">
+                  <%= render "form", article: @article %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

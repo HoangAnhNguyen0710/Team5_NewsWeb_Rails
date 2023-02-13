@@ -1,14 +1,61 @@
-<p style="color: green"><%= notice %></p>
+<div class="content-wrapper">
+  <div class="container">
+    <div class="row" data-aos="fade-up">
+      <div class="col-lg-3 stretch-card grid-margin">
+        <div class="card">
+          <div class="card-body">
+            <h2>Category</h2>
+            <ul class="vertical-menu">
+              <% @categories.each do |category| %>
+                <li style="text-transform: capitalize;"><%= link_to category.category_name, category_path(category) %></li>
+              <% end %>
+            </ul>
+            <% if user_signed_in? %>
+              <%= link_to "New Category", new_category_path, class: "btn font-weight-bold", style: "background-color: #032a63; color: #fff; width: 100%; margin-top: 12%; font-size: 14px" %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-9 stretch-card grid-margin">
+        <div class="card">
+          <div class="card-body">
+            <% @flash_news.each do |article| %>
+              <div class="row">
+                <div class="col-sm-4 grid-margin">
+                  <div class="position-relative">
+                    <div class="rotate-img">
+                      <% if article.thumbnail.attached? %>
+                        <%= link_to article_path(article) do %>
+                          <%= image_tag article.thumbnail, class: "img-fluid", style: "border-radius: 4px" %>
+                        <% end %>
+                      <% end %>
+                    </div>
+                    <div class="badge-positioned badge badge-danger font-weight-bold text-capitalize">
+                      <%= article.category.category_name %>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-8  grid-margin">
+                  <h2>
+                    <%= link_to article_path(article), class: "mb-2 font-weight-600", style: "text-decoration: none; color: #000" do %>
+                      <% article.title.truncate(50) %>
+                    <% end %>
+                  </h2>
+                  <div class="fs-13 mb-2">
+                    <%= article.created_at.strftime("%B %d, %Y") %>
+                  </div>
+                  <p>
+                    <%= link_to article_path(article), class: "text-dark mb-0", style: "text-decoration: none" do %>
+                      <%= article.content.truncate(300) %>
+                    <% end %>
+                  </p>
+                </div>
+              </div>
+            <% end %>
 
-<h1>Categories</h1>
-
-<div id="categories">
-  <% @categories.each do |category| %>
-    <%= render category %>
-    <p>
-      <%= link_to "Show this category", category %>
-    </p>
-  <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-
-<%= link_to "New category", new_category_path %>

@@ -1,6 +1,9 @@
 class Article < ApplicationRecord
     belongs_to :category, foreign_key: "category_id"
     belongs_to :user, foreign_key: "user_id"
-    has_one_attached :image
-    has_many :article_review, -> { order "created_at DESC"}
+
+    validates :title, presence: true
+    validates :content, presence: true
+    validates :thumbnail, presence: true
+    has_one_attached :thumbnail
 end

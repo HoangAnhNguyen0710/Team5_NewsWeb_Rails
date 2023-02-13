@@ -3,12 +3,13 @@ class ArticlesController < ApplicationController
 
   # GET /articles or /articles.json
   def index
-    @articles = Article.includes([:user, :category]).all
+    redirect_to root_path
   end
 
   # GET /articles/1 or /articles/1.json
   def show
-    @article_review = ArticleReview.new
+    @comments = Comment.where(article_id: @article.id).order(created_at: :desc)
+    @comment = Comment.new
   end
 
   # GET /articles/new
@@ -24,7 +25,7 @@ class ArticlesController < ApplicationController
   # POST /articles or /articles.json
   def create
     article_content = article_params
-    article_content[:user_id]=current_user.id
+    article_content[:user_id] = current_user.id
     @article = Article.new(article_content)
 
     respond_to do |format|
@@ -54,7 +55,6 @@ class ArticlesController < ApplicationController
   # DELETE /articles/1 or /articles/1.json
   def destroy
     @article.destroy
-
     respond_to do |format|
       format.html { redirect_to articles_url, notice: "Article was successfully destroyed." }
       format.json { head :no_content }
@@ -62,13 +62,17 @@ class ArticlesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_article
-      @article = Article.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def article_params
-      params.require(:article).permit(:title, :category_id, :content, :display, :image)
+  # Use callbacks to share common setup or constraints between actions.
+  def set_article
+    @article = Article.find_by(id: params[:id])
+    if @article.nil?
+      redirect_to root_path
     end
+  end
+
+  # Only allow a list of trusted parameters through.
+  def article_params
+    params.require(:article).permit(:title, :category_id, :content, :display, :thumbnail)
+  end
 end
