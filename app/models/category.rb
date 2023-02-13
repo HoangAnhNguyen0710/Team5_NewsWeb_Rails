@@ -1,4 +1,5 @@
 class Category < ApplicationRecord
+
     # has_many :articles, dependent: :destroy
     # has_many :users, :through => :articles
     extend FriendlyId

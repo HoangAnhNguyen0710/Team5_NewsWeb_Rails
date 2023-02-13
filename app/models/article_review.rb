@@ -1,0 +1,2 @@
+class ArticleReview < ApplicationRecord
+end
