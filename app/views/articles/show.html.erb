@@ -1,10 +1,96 @@
-<p style="color: green"><%= notice %></p>
+<div class="content-wrapper">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="card" data-aos="fade-up">
+          <div class="card-body">
+            <div class="float-right" style="display: inline-block;">
+            </div>
+            <% if user_signed_in? %>
+              <% if current_user.id == @article.user_id %>
+                <div class="float-right" style="display: flex;">
+                  <%= link_to "Edit", edit_article_path(@article), class: "btn btn-primary", style: "color: #fff; font-size: 16px; margin-right: 10px" %>
+                  <%= button_to "Delete", @article, method: :delete, class: "btn btn-danger", style: "font-size: 16px"%>
+                </div>
+              <% end %>
+            <% end %>
+            <div class="aboutus-wrapper">
 
-<%= render @article %>
+              <h1 class="mt-5">
+                <%= @article.title %>
+              </h1>
+              <p class="fs-13 text-muted mb-0">
+                <%= @article.created_at.strftime("%B %d, %Y") %>
+              </p>
+              <p class="font-weight-600 fs-15">
+                <%= @article.content %>
+              </p>
+              <% if @article.thumbnail.attached? %>
+                <%= image_tag @article.thumbnail, class: "img-fluid mb-5" %>
+              <% end %>
+            </div>
+            <div class="post-comment-section">
+              <div class="comment-section">
+                <h5 class="font-weight-600" style="font-size: 24px; margin-bottom: 20px">Comments</h5>
+                <% if user_signed_in? %>
+                  <div class="comment-box">
+                    <div class="d-flex align-items-center flex-row">
 
-<div>
-  <%= link_to "Edit this article", edit_article_path(@article) %> |
-  <%= link_to "Back to articles", articles_path %>
+                      <div class="rotate-img">
+                        <% if current_user.avatar.attached? %>
+                          <%= image_tag current_user.avatar, class: "img-fluid img-rounded mr-3" %>
+                        <% end %>
+                      </div>
 
-  <%= button_to "Destroy this article", @article, method: :delete %>
+
+                      <div style="width: 100%">
+                        <%= form_with(model: @comment, local: true) do |form| %>
+                          <div class="d-flex w-100">
+                            <%= form.hidden_field :user_id, value: current_user.id %>
+                            <%= form.hidden_field :article_id, value: @article.id %> 
+                            <%= form.text_field :content, class: "form-control ml-3 mr-3", placeholder: "Write a comment" %>
+                            <%= form.submit "Comment", class: "btn btn-primary", style: "height: 48px" %>
+                          </div>
+                        <% end %>
+
+
+                      </div>
+                    </div>
+                  </div>
+                <% end %>
+                <% @comments.each do |comment| %>
+
+                  <div class="comment-box">
+                    <div class="d-flex align-items-center">
+                      <div class="rotate-img">
+                        <% if comment.user.avatar.attached? %>
+                          <%= image_tag comment.user.avatar, class: "img-fluid img-rounded mr-3" %>
+                        <% end %>
+                      </div>
+                      <div>
+                        <p class="fs-12 mb-1 line-height-xs">
+                          <%= comment.created_at.strftime("%B %d, %Y") %>
+                        </p>
+                        <p
+                          class="fs-16 font-weight-600 mb-0 line-height-xs"
+                        >
+                          <%= comment.user.name %>
+                        </p>
+                      </div>
+                    </div>
+
+                    <p class="fs-12 mt-3">
+                      <%= comment.content %>
+                    </p>
+
+                  </div>
+
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

@@ -4,10 +4,13 @@ class CategoriesController < ApplicationController
   # GET /categories or /categories.json
   def index
     @categories = Category.all
+    @flash_news = Article.joins(:category).order("articles.created_at DESC").limit(3).group("categories.id")
   end
 
   # GET /categories/1 or /categories/1.json
   def show
+    @category = Category.friendly.find(params[:id])
+    @articles = Article.where(category_id: @category.id).order("created_at DESC")
   end
 
   # GET /categories/new
@@ -22,6 +25,7 @@ class CategoriesController < ApplicationController
   # POST /categories or /categories.json
   def create
     @category = Category.new(category_params)
+    @category.id = SecureRandom.uuid
 
     respond_to do |format|
       if @category.save
@@ -58,13 +62,14 @@ class CategoriesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_category
-      @category = Category.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def category_params
-      params.require(:category).permit(:category_name)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_category
+    @category = Category.friendly.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def category_params
+    params.require(:category).permit(:category_name)
+  end
 end

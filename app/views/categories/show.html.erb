@@ -1,10 +1,117 @@
-<p style="color: green"><%= notice %></p>
+<div class="content-wrapper">
+  <div class="container">
+    <div class="col-sm-12">
+      <div class="card" data-aos="fade-up">
+        <div class="card-body">
+          <% if user_signed_in? %>
+            <div class="float-right" style="display: flex;">
+              <%= link_to "Edit", edit_category_path(@category), class: "btn btn-primary", style: "color: #fff; font-size: 16px; margin-right: 10px" %>
+              <%# <%= button_to "Delete", category_path(@category), method: :delete, class: "btn btn-danger", style: "color: #fff; font-size: 16px" %>
+            </div>
+          <% end %>
+          <div class="row">
+            <div class="col-sm-12">
+              <h1 class="font-weight-600 mb-4" style="text-transform: uppercase;">
+                <%= @category.category_name %>
+              </h1>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-8">
+              <% @articles.each do |article| %>
+                <div class="row">
+                  <div class="col-sm-4 grid-margin">
+                    <div class="rotate-img">
+                      <% if article.thumbnail.attached? %>
+                        <%= link_to article_path(article) do %>
+                          <%= image_tag article.thumbnail, class: "img-fluid" %>
+                        <% end %>
+                      <% end %>
+                    </div>
+                  </div>
+                  <div class="col-sm-8 grid-margin">
+                    <h2>
+                      <%= link_to article_path(article), class: "font-weight-600 mb-2", style: "color: #000; text-decoration: none;" do %>
+                        <%= article.title.truncate(50) %>
+                      <% end %>
+                    </h2>
+                    <p class="fs-13 text-muted mb-0">
+                      <%= article.created_at.strftime("%B %d, %Y") %>
+                    </p>
+                    <p>
+                      <%= link_to article_path(article), class: "fs-15", style: "color: #000; text-decoration: none;" do %>
+                        <%= article.content.truncate(200) %>
+                      <% end %>
+                    </p>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+            <div class="col-lg-4">
+              <h2 class="mb-4 text-primary font-weight-600">
+                Latest news
+              </h2>
+              <% @articles.first(3).each do |article| %>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="border-bottom pb-4 pt-4">
+                      <div class="row">
+                        <div class="col-sm-8">
+                          <h5>
+                            <%= link_to article_path(article), class: "font-weight-600 mb-1", style: "color: #000; text-decoration: none;" do %>
+                              <%= article.title.truncate(30) %>
+                            <% end %>
+                          </h5>
+                          <p class="fs-13 text-muted mb-0">
+                            <%= article.created_at.strftime("%B %d, %Y") %>
+                          </p>
+                        </div>
+                        <div class="col-sm-4">
+                          <div class="rotate-img">
+                            <% if article.thumbnail.attached? %>
+                              <%= link_to article_path(article) do %>
+                                <%= image_tag article.thumbnail, class: "img-fluid" %>
+                              <% end %>
+                            <% end %>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+              <div class="trending">
+                <h2 class="mb-4 text-primary font-weight-600">
+                  Trending
+                </h2>
+                <% @articles.first(3).each do |article| %>
 
-<%= render @category %>
+                  <div class="mb-4">
+                    <div class="rotate-img">
+                      <% if article.thumbnail.attached? %>
+                        <%= link_to article_path(article) do %>
+                          <%= image_tag article.thumbnail, class: "img-fluid", style: "width: 100%; height: 100px; object-fit: cover;" %>
+                        <% end %>
+                      <% end %>
+                    </div>
+                    <h3>
+                      <%= link_to article_path(article), class: "mt-3 font-weight-600", style: "color: #000; text-decoration: none;" do %>
+                        <%= article.title.truncate(40) %>
+                      <% end %>
 
-<div>
-  <%= link_to "Edit this category", edit_category_path(@category) %> |
-  <%= link_to "Back to categories", categories_path %>
+                    </h3>
+                    <p class="fs-13 text-muted mb-0">
+                      <%= article.created_at.strftime("%B %d, %Y") %>
+                    </p>
+                  </div>
 
-  <%= button_to "Destroy this category", @category, method: :delete %>
+                <% end %>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
