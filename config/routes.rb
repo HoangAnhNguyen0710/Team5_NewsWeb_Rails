@@ -1,9 +1,8 @@
 Rails.application.routes.draw do
-
   # get 'static_pages/home'
 
+
   root 'static_pages#home'
-  get '/categories/:id', to: 'static_pages#category'
   devise_for :users
 
   devise_scope :user do

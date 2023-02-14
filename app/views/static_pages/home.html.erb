@@ -1,6 +1,5 @@
 
 
-
 <div class="content-wrapper">
   <div class="container">
     <div class="row" data-aos="fade-up">
@@ -9,7 +8,7 @@
           <% @lastest_news.first(1).each do |article| %>
             <% if article.thumbnail.attached? %>
               <%= link_to article_path(article) do %>
-                <%= image_tag article.thumbnail,  class: "img-fluid", style: "border-radius: 6px" %>
+                <%= image_tag article.thumbnail,  class: "img-fluid h-100", style: "border-radius: 6px" %>
               <% end %>
             <% end %>
           <div class="banner-content">
