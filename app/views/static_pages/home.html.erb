@@ -57,19 +57,21 @@
         </div>
       </div>
     </div>
+    
     <div class="row" data-aos="fade-up">
       <div class="col-lg-12 stretch-card grid-margin">
         <div class="card">
+        <% @flash_news.each do |article| %>
           <div class="card-body">
             <div class="row">
               <div class="col-sm-4 grid-margin">
                 <div class="position-relative">
                   <div class="rotate-img">
-                    <img
-                      src="/assets/images/dashboard/home_4.jpg"
-                      alt="thumb"
-                      class="img-fluid"
-                      />
+                   <% if article.thumbnail.attached? %>
+                    <%= link_to article_path(article) do %>
+                      <%= image_tag article.thumbnail,  class: "img-fluid img-lg", style: "min-width: 16rem"%>
+                    <% end %>
+                  <% end %>
                   </div>
                   <div class="badge-positioned">
                             <span class="badge badge-danger font-weight-bold"
@@ -80,11 +82,15 @@
               </div>
               <div class="col-sm-8  grid-margin">
                 <h2 class="mb-2 font-weight-600">
-                  South Korea’s Moon Jae-in sworn in vowing to address
-                  North
+                   <%= link_to article_path(article), class: "text-black", style: "text-decoration: none" do %>
+                    <%= article.title.truncate(50) %>
+                  <% end %>
                 </h2>
                 <div class="fs-13 mb-2">
-                  <span class="mr-2">Photo </span>10 Minutes ago
+                  <span class="mr-2"> 
+                  <div class="fs-12">
+                  <span class="mr-2"><%= article.created_at.strftime("%d/%m/%Y") %></span>
+                </div>
                 </div>
                 <p class="mb-0">
                   Lorem Ipsum has been the industry's standard dummy
@@ -93,7 +99,7 @@
               </div>
             </div>
 
-            <div class="row">
+            <%# <div class="row">
               <div class="col-sm-4 grid-margin">
                 <div class="position-relative">
                   <div class="rotate-img">
@@ -104,8 +110,8 @@
                       />
                   </div>
                   <div class="badge-positioned">
-                            <span class="badge badge-danger font-weight-bold"
-                            >Flash news</span
+                            <span class="badge badge-danger font-weight-bold" %>
+                            <%# >Flash news</span
                             >
                   </div>
                 </div>
@@ -122,9 +128,9 @@
                   text ever since the 1500s, when an
                 </p>
               </div>
-            </div>
+            </div> %>
 
-            <div class="row">
+            <%# <div class="row">
               <div class="col-sm-4">
                 <div class="position-relative">
                   <div class="rotate-img">
@@ -140,8 +146,8 @@
                             >
                   </div>
                 </div>
-              </div>
-              <div class="col-sm-8">
+              </div> %>
+              <%# <div class="col-sm-8">
                 <h2 class="mb-2 font-weight-600">
                   Kaine: Trump Jr. may have committed treason
                 </h2>
@@ -153,8 +159,9 @@
                   text ever since the 1500s, when an
                 </p>
               </div>
-            </div>
+            </div> %>
           </div>
+          <% end %>
         </div>
       </div>
     </div>
